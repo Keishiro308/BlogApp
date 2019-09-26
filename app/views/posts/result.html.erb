@@ -1,0 +1,38 @@
+<div class="container">
+  <h1>検索結果<small>-<%= @search_posts.count %>件-</small></h1>
+  <div class="row">
+  <% @search_posts.each do |post| %>
+  <% count=Comment.where(post_id: post.id).count %>
+    <div class="col-sm-4">
+      <div class="card-group" id="blogCard">
+        <div class="card">
+          <h5><span class="fas fa-user" data-fa-transform="left-1"></span><%= link_to(post.user.name,"/users/#{post.user.id}") %></h5>
+          <span class="comment-badge fa-layers">
+            <span class="fas fa-comment"></span>
+            <span class="count"><%= count %></span>
+          </span>
+          <img src="<%="/article_images/#{post.article_image}"%>" class="card-img-top" alt="..." id="card-image">
+          <div class="card-body">
+            <h3 class="card-title text-center"><%= link_to( post.title,"/posts/#{post.id}")%></h3>
+          </div>
+          <div class="card-footer">
+            <% post.tag_names.each do |tag| %>
+            <div class="badge badge-primary">
+              <%= link_to(tag, "/posts/tag/#{tag}") %>
+            </div>
+            <%end%>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <% end %>
+  </div>
+
+
+  <br>
+  <div class="paginate-container">
+    <%= paginate @search_posts %>
+  </div>
+
+</div>

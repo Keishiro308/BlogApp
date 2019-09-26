@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>BlogApp</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <script src="https://kit.fontawesome.com/ccabdd0cf3.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="/assets/application.css">
+    <%= partial_stylesheet_link_tag( controller.controller_name,@partial_css_disabled) %>
+    <!-- <link rel="stylesheet" href="/stylesheets/posts/post.scss"> -->
+    <%= trix_stylesheet_link_tag(@trix_css_disabled) %>
+
+
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary" id="nav-top">
+      <a class="navbar-brand" href="/">BlogApp</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <% if session[:user_id] %>
+            <li class="nav-item">
+              <%= link_to(@current_user.name,"/users/#{@current_user.id}",class:"nav-link") %>
+            </li>
+            <li class="nav-item">
+              <%= link_to("Home","/",class:"nav-link") %>
+            </li>
+            <li class="nav-item">
+              <%= link_to("ログアウト","/logout",{class:"nav-link",method:"post"}) %>
+            </li>
+            <li class="nav-item">
+              <%= link_to("新規投稿","/posts/new",{class:"nav-link"}) %>
+            </li>
+            <li class="nav-item">
+              <%= link_to("投稿一覧","/posts",class:"nav-link") %>
+            </li>
+            <li class="nav-item">
+              <%= link_to("フォローした作者の記事","/users/#{@current_user.id}/follow",class:"nav-link") %>
+            </li>
+          <% else %>
+            <li class="nav-item">
+              <%= link_to("ログイン","/login",class:"nav-link") %>
+            </li>
+            <li class="nav-item">
+              <%= link_to("新規登録","/users/new",class:"nav-link") %>
+            </li>
+          <% end %>
+        </ul>
+        <!-- <form class="form-inline my-2 my-lg-0">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline my-2 my-sm-0" type="submit">Search</button>
+        </form> -->
+        <%= search_form_for @q, url:"/posts/result" do |f| %>
+        <div class="form-inline my-2 my-lg-0">
+          <%= f.search_field :title_cont, class: "form-control mr-sm-2", placeholder: "タイトル検索"%>
+
+          <%= f.submit "検索" ,class: "btn btn-outline my-2 my-sm-0"%>
+        </div>
+        <% end %>
+
+      </div>
+    </nav>
+
+    <% if flash[:notice] %>
+      <div class="alert alert-warning">
+        <%= flash[:notice] %>
+      </div>
+    <% end %>
+
+    <%= yield %>
+    <a href="#nav-top" class="top-button"><i class="fas fa-angle-double-up"></i></a>
+
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <%= javascript_pack_tag 'bootstrap-tagsinput' %>
+  </body>
+</html>

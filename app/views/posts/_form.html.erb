@@ -1,0 +1,37 @@
+<%= form_with(model: post, local: true) do |form| %>
+  <% if post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+        <% post.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :title %>
+    <%= form.text_field :title, :class => "form-control"%>
+  </div>
+  <div class="field">
+    <%= form.label :tags_as_string, 'タグをカンマ区切りで入力' %>
+    <%= form.text_field :tags_as_string, :class => "form-control", :value => post.tags_as_string, :data =>{:role => "tagsinput"} %>
+  </div>
+
+
+  <div class="field">
+    <%= form.label :content %>
+    <%= form.rich_text_area :content, :class => "form-controll" %>
+  </div>
+  <div class="field">
+    <%= form.label :article_image %>
+    <%= form.file_field :article_image%>
+  </div>
+
+  <div class="actions">
+    <%= form.submit class:"btn btn-primary"%>
+  </div>
+  <input type="hidden" value="<%= @current_user.id %>" name="post[user_id]">
+<% end %>

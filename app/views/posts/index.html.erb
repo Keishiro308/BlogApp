@@ -1,0 +1,37 @@
+
+<div class="container">
+  <h1>投稿一覧</h1>
+  <div class="row">
+    <% @posts.each do |post| %>
+    <% count=Comment.where(post_id: post.id).count %>
+
+      <div class="col-sm-4">
+        <div class="card-group" id="blogCard">
+          <div class="card">
+            <div class="fa-layers comment-badge">
+              <i class="fas fa-comment"></i>
+              <span class="count">
+                <%= count %>
+              </span>
+            </div>
+            <h5><i class="fas fa-user"></i><%= link_to(post.user.name,"/users/#{post.user.id}") %></h5>
+            <img src="<%="/article_images/#{post.article_image}"%>" class="card-img-top" alt="..." id="card-image">
+            <div class="card-body">
+              <h4 class="card-title text-center"><%= link_to( post.title,"/posts/#{post.id}")%></h4>
+            </div>
+            <div class="card-footer">
+              <% post.tag_names.each do |tag| %>
+              <div class="badge badge-primary">
+                <%= link_to(tag, "/posts/tag/#{tag}") %>
+              </div>
+              <%end%>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="paginate-container">
+    <%= paginate @posts %>
+  </div>
+</div>

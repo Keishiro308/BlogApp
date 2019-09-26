@@ -1,0 +1,126 @@
+// Place all the styles related to the users controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+#login_form{
+  margin-top: 50px;
+  border: #000 solid 1px;
+  padding: 40px 0px;
+  border-radius: 4px;
+  h2{
+    text-align: center;
+  }
+  label{
+    font-size: 20px;
+  }
+}
+
+.btn-container{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+.user_show{
+  text-align: center;
+}
+
+.user_show img,
+#follow_image{
+  width: 80px;
+  height: 80px;
+  border-radius: 40%;
+  box-shadow: 0 2px 6px #c1ced7;
+  margin: 20px 0 10px;
+  object-fit: cover;
+}
+
+
+
+
+#blogCard{
+  margin-bottom: 10px;
+}
+
+#exampleInputImage{
+  width: 100%;
+  border: 1px solid #d8dadf;
+  padding: 10px;
+  color: #57575f;
+  font-size: 16px;
+  letter-spacing: 2px;
+  border-radius: 2px;
+}
+
+.card img{
+  width: 100%;
+  height: 180px;;
+}
+
+.card a{
+  color: black;
+}
+.card h5 a{
+  font-size: 15px;
+}
+a.btn{
+  color: white;
+}
+
+.card-group{
+  margin-bottom: 30px;
+}
+
+
+.card > fa-user{
+  margin-right: 10px;
+}
+
+.card{
+  position: relative;
+}
+#card-image{
+  width: 100%;
+  height: 180px;
+}
+
+
+.comment-badge{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #007bff;
+  text-align: center;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 7px;
+  right: 20px;
+}
+
+.comment-badge>.fa-comment{
+  line-height: 50px;
+  font-size: 30px;
+}
+
+.count{
+  color: #007bff;
+  z-index: 100;
+}
+
+
+.card-footer {
+  max-height: 120px;
+  overflow: hidden;
+  a{
+  color: white;
+  }
+}
+
+.paginate-container{
+  display: flex;
+  justify-content: center;
+  margin: 40px 0;
+}

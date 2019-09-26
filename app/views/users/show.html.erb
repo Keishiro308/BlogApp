@@ -1,0 +1,57 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-12 user_show">
+      <img src="<%=" /user_images/#{@user.image_name} "%>" alt="" >
+      <h3><%= @user.name %></h3>
+      <p><%= @user.profile %></p>
+      <% if @current_user.id == @user.id %>
+        <p><%=link_to("編集","/users/#{@user.id}/edit",{class:"btn btn-primary"}) %></p>
+      <%end%>
+      <% if @current_user.id != @user.id %>
+        <% if Follow.find_by(author_id: @user.id, user_id: @current_user.id) %>
+          <p><%= link_to("フォローを解除する", "/follows/#{@user.id}/destroy",{method:"post",class:"btn btn-danger"}) %></p>
+        <% else %>
+          <p><%= link_to("フォローする", "/follows/#{@user.id}/create",{method:"post",class:"btn btn-primary"}) %></p>
+        <%end%>
+      <%end%>
+    </div>
+  </div>
+
+  <div class="row">
+    <% @posts.each do |post| %>
+    <% count=Comment.where(post_id: post.id).count %>
+      <div class="col-sm-4">
+        <div class="card-group" id="blogCard">
+          <div class="card">
+            <div class="fa-layers comment-badge">
+              <i class="fas fa-comment"></i>
+              <span class="count">
+                <%= count %>
+              </span>
+            </div>
+            <h5><i class="fas fa-user"></i><%= link_to(post.user.name,"/users/#{post.user.id}") %></h5>
+            <img src="<%="/article_images/#{post.article_image}"%>" class="card-img-top" alt="...">
+            <div class="card-body">
+              <h4 class="card-title text-center"><%= link_to( post.title,"/posts/#{post.id}")%></h4>
+              <% if @current_user.id == @user.id %>
+                <%= link_to '削除', post, method: :delete, data: { confirm: '本当に削除しますか?', },class: "btn btn-primary" %>
+                <%= link_to '編集', edit_post_path(post), class: "btn btn-primary"%>
+              <%end%>
+            </div>
+            <div class="card-footer">
+              <% post.tag_names.each do |tag| %>
+              <div class="badge badge-primary">
+                <%= link_to(tag, "/posts/tag/#{tag}",{method:"post"}) %>
+              </div>
+              <%end%>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="paginate-container">
+    <%= paginate @posts %>
+  </div>
+</div>
